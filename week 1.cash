@@ -1,0 +1,48 @@
+#include <stdio.h>
+#include <cs50.h>
+
+int main()
+{
+    int coin=0;
+    int money;
+    do
+    {
+        money =get_int("Change owed:");
+    }
+    while(money<0);
+
+    int i=0;
+    int j=0;
+    int k=0;
+    int l=0;
+
+    while(money-25>=0)
+    {
+        money-=25;
+        i++;
+    };
+
+    while(money-10>=0)
+    {
+        money-=10;
+        j++;
+    };
+
+    while(money-5>=0)
+    {
+        money-=5;
+        k++;
+    };
+
+    while(money-1>=0)
+    {
+        money-=1;
+        l++;
+    };
+
+    coin=i+j+k+l;
+
+    printf("%d",coin);
+
+    return 0;
+}
