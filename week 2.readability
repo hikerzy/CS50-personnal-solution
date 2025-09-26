@@ -1,0 +1,104 @@
+#include <stdio.h>
+#include <cs50.h>
+#include <string.h>
+#include <ctype.h>
+#include <math.h>
+
+int Count_words(string text);
+int Count_letter(string text);
+int Count_sentence(string text);
+
+double Compute_L( int letter,int words )
+{
+    double calculate_l = letter*100.0/words;
+    return calculate_l;
+};
+
+double Compute_S( int words,int sentence )
+{
+    double calculate_s = sentence*100.0/words;
+    return calculate_s;
+};
+
+double Compute_index(double L,double S)
+{
+  double index =0.0588*L - 0.296*S - 15.8;
+  return index;
+};
+
+int print_grade( double index )
+{
+    int grade = round (index);
+    if(grade < 1)
+    {
+        printf("Before Grade 1\n");
+    }
+    else if(1 <= grade && grade < 16)
+    {
+        printf("Grade %i\n", grade);
+
+    }
+    else if( grade >16 )
+    {
+        printf("Grade 16+\n");
+    };
+    return 0;
+};
+
+int Count_letter(string text)
+{
+    int letter =0;
+
+    for(int i=0;i<strlen(text);i++ )
+    {
+        if(isalnum(text[i]))
+        {
+            letter++;
+        };
+    };
+
+    return letter;
+};
+
+int Count_words(string text)
+{
+    int words = 0;
+
+    for (int i=0;i < strlen(text);i++ )
+    {
+        if ( isspace(text[i]))
+        {
+            words++;
+        };
+    };
+
+    return words + 1;
+};
+
+int Count_sentence(string text)
+{
+    int sentence=0;
+    for ( int i=0;i<strlen(text);i++ )
+    {
+     if ( text[i] == '.' || text[i]== '?'|| text[i]== '!')
+        {
+            sentence++;
+        };
+    };
+
+    return sentence;
+}
+int main()
+{
+    string text = get_string("Please input your sentence:");
+
+/* L mean the average number of alpha per 100 words */
+    double L = Compute_L(Count_letter(text),Count_words(text));
+
+/* S mean the average number of sentense per 100 words */
+    double S = Compute_S(Count_words(text),Count_sentence(text));
+
+    Compute_index(L,S);
+    print_grade(Compute_index(L,S));
+    return 0;
+}
